@@ -1,8 +1,23 @@
-#!/bin/sh
+#!/bin/bash
 
-usage ()
-{
-  cat /README.md | sed -n -e '/Usage/,$p'
+
+shrink() {
+  if [[  $1 == *'shrinked'* ]]; then
+    return 0
+  fi
+
+  filename=$(basename $1)
+  filename=$(sed 's/\.pdf//g' $filename)
+
+  shrink "$1" "${filename}_shrinked.pdf"
+
+  if [ $? -ne 0 ]; then
+    return 0
+  fi
+
+  rm "$1"
 }
 
-usage
+export -f shrink
+
+find /pdf -iname '*.pdf' -type f -exec bash -c 'shrink "$0"' {} \;
