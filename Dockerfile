@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-MAINTAINER Mark Percival <m@mdp.im>
+MAINTAINER Yannik Korzikowski <yannik@korzikowski.de>
 
 # data should be mounted with a directory container your PDF's
 RUN mkdir /data
@@ -11,6 +11,7 @@ RUN apk add \
   pdftk \
   ghostscript \
   imagemagick \
+  bash \
   ghostscript-fonts
 
 RUN rm -rf /var/cache/apk/*
