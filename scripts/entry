@@ -1,15 +1,18 @@
 #!/bin/bash
 
 
-shrink() {
+do_shrink() {
   if [[  $1 == *'shrinked'* ]]; then
     return 0
   fi
 
-  filename=$(basename $1)
-  filename=$(sed 's/\.pdf//g' $filename)
+  # remove .pdf ending from string
+  filename=$(basename "$1")
+  filename=$(echo $filename|sed 's/\.pdf//g')
+  old_dir=$(dirname "$1")
 
-  shrink "$1" "${filename}_shrinked.pdf"
+  echo "Shrinking $1 "
+  shrink "$1" "${OUTPUT_DIR:$old_dir}/${filename}_shrinked.pdf"
 
   if [ $? -ne 0 ]; then
     return 0
@@ -18,6 +21,10 @@ shrink() {
   rm "$1"
 }
 
-export -f shrink
+export -f do_shrink
 
-find /pdf -iname '*.pdf' -type f -exec bash -c 'shrink "$0"' {} \;
+
+while [ true ]; do
+  sleep 5
+  find /pdf -iname '*.pdf' -type f -exec bash -c 'do_shrink "$0"' {} \;
+done

@@ -1,13 +1,12 @@
-FROM alpine:latest
+FROM alpine:3.8
 
 MAINTAINER Yannik Korzikowski <yannik@korzikowski.de>
 
 # data should be mounted with a directory container your PDF's
-RUN mkdir /data
-VOLUME ["/data"]
+VOLUME ["/pdf"]
 
-RUN apk update
-RUN apk add \
+RUN apk --no-cache add \
+  sed \
   pdftk \
   ghostscript \
   imagemagick \
@@ -21,6 +20,6 @@ ADD scripts/* /scripts/
 ADD README.md /
 env PATH /scripts:$PATH
 
-WORKDIR /data
+WORKDIR /pdf
 
 CMD ["/scripts/entry"]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # A simple script to reduce PDF file size with gs
 # Original script: Alfred Klomp
@@ -18,7 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Default to overwrite
-OUT=${OUT:$1}
+OUT=$2
+
+filename=$(basename "$1")
 
 gs -sDEVICE=pdfwrite                    \
   -dCompatibilityLevel=1.4              \
@@ -34,14 +36,15 @@ gs -sDEVICE=pdfwrite                    \
   -dGrayImageResolution=300             \
   -dMonoImageDownsampleType=/Bicubic    \
   -dMonoImageResolution=300             \
-  -sOutputFile="/tmp/$1"                \
+  -sOutputFile="/tmp/$filename"         \
   "$1"
 
-CFILE=$(stat -c%s "/tmp/$1")
+CFILE=$(stat -c%s "/tmp/$filename")
 OFILE=$(stat -c%s "$1")
 
 if [[ "$OFILE" -gt "$CFILE" ]]; then
-  cp "/tmp/$1" "$OUT"
+  cp "/tmp/$filename" "$OUT"
 else
-  echo 'NOOP - Compressed file is not smaller than the original'
+  mv "$1" "$OUT"
+  exit 1
 fi
