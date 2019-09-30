@@ -9,10 +9,13 @@ do_shrink() {
   # remove .pdf ending from string
   filename=$(basename "$1")
   filename=$(echo $filename|sed 's/\.pdf//g')
-  old_dir=$(dirname "$1")
+  out=$OUTPUT_DIR
+  if [ -z ${out+x} ]; then
+    out=$(dirname "$1")
+  fi
 
   echo "Shrinking $1 "
-  shrink "$1" "${OUTPUT_DIR:$old_dir}/${filename}_shrinked.pdf"
+  shrink "$1" "${out}/${filename}_shrinked.pdf"
 
   if [ $? -ne 0 ]; then
     return 0
@@ -22,7 +25,6 @@ do_shrink() {
 }
 
 export -f do_shrink
-
 
 while [ true ]; do
   sleep 5

@@ -31,11 +31,13 @@ gs -sDEVICE=pdfwrite                    \
   -dSubsetFonts=true                    \
   -dAutoRotatePages=/None               \
   -dColorImageDownsampleType=/Bicubic   \
-  -dColorImageResolution=300            \
+  -dColorImageResolution=50            \
   -dGrayImageDownsampleType=/Bicubic    \
-  -dGrayImageResolution=300             \
+  -dGrayImageResolution=50             \
   -dMonoImageDownsampleType=/Bicubic    \
-  -dMonoImageResolution=300             \
+  -dMonoImageResolution=50             \
+  -sColorConversionStrategy=Gray        \
+  -dProcessColorModel=/DeviceGray       \
   -sOutputFile="/tmp/$filename"         \
   "$1"
 
