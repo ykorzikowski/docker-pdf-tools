@@ -17,12 +17,13 @@ RUN rm -rf /var/cache/apk/*
 
 RUN adduser --uid 1000 --disabled-password --home /app pdf
 
+WORKDIR /app
+
 ADD scripts/* /app/
 ADD README.md /
 env PATH /scripts:$PATH
 
+RUN chown pdf:pdf /app
+
 USER pdf
-
-WORKDIR /app
-
 CMD ["/scripts/entry"]
