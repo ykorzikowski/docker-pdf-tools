@@ -26,6 +26,7 @@ ADD README.md /
 env PATH /app:$PATH
 
 RUN chown pdf:pdf /app
+RUN chmod -R +x /app
 
 USER pdf
 CMD ["/app/entry"]
