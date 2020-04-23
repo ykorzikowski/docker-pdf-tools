@@ -15,10 +15,9 @@ RUN apk --no-cache add \
 
 RUN rm -rf /var/cache/apk/*
 
-RUN adduser --uid 1000 --home /app pdf
-RUN mkdir /app
+RUN adduser --uid 1000 --disabled-password --home /app pdf
 
-ADD scripts/* /app
+ADD scripts/* /app/
 ADD README.md /
 env PATH /scripts:$PATH
 
