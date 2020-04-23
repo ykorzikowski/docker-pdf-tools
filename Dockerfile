@@ -15,11 +15,15 @@ RUN apk --no-cache add \
 
 RUN rm -rf /var/cache/apk/*
 
-RUN mkdir /scripts
-ADD scripts/* /scripts/
+RUN adduser --uid 1000 --home /app pdf
+RUN mkdir /app
+
+ADD scripts/* /app
 ADD README.md /
 env PATH /scripts:$PATH
 
-WORKDIR /pdf
+USER pdf
+
+WORKDIR /app
 
 CMD ["/scripts/entry"]
