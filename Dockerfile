@@ -2,6 +2,8 @@ FROM alpine:3.8
 
 MAINTAINER Yannik Korzikowski <yannik@korzikowski.de>
 
+ARG UID=1000
+
 # data should be mounted with a directory container your PDF's
 VOLUME ["/pdf"]
 
@@ -15,7 +17,7 @@ RUN apk --no-cache add \
 
 RUN rm -rf /var/cache/apk/*
 
-RUN adduser --uid 1000 --disabled-password --home /app pdf
+RUN adduser --uid $UID --disabled-password --home /app pdf
 
 WORKDIR /app
 
