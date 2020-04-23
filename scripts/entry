@@ -9,7 +9,7 @@ do_shrink() {
   # remove .pdf ending from string
   filename=$(basename "$1")
   filename=$(echo $filename|sed 's/\.pdf//g')
-  out=$OUTPUT_DIR
+  out=/out
   if [ -z ${out+x} ]; then
     out=$(dirname "$1")
   fi
