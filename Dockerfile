@@ -23,9 +23,9 @@ WORKDIR /app
 
 ADD scripts/* /app/
 ADD README.md /
-env PATH /scripts:$PATH
+env PATH /app:$PATH
 
 RUN chown pdf:pdf /app
 
 USER pdf
-CMD ["/scripts/entry"]
+CMD ["/app/entry"]
